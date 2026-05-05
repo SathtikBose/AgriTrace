@@ -130,12 +130,14 @@ const forgotPassword = async (req, res) => {
 
       res.json({ message: 'OTP sent to your email' });
     } catch (err) {
+      console.error('Resend Email Error:', err);
       user.resetPasswordToken = undefined;
       user.resetPasswordExpire = undefined;
       await user.save();
-      return res.status(500).json({ message: 'Email could not be sent' });
+      return res.status(500).json({ message: 'Email could not be sent', error: err.message });
     }
   } catch (error) {
+    console.error('ForgotPassword System Error:', error);
     res.status(500).json({ message: error.message });
   }
 };

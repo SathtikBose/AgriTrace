@@ -25,7 +25,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex-grow flex items-center justify-center px-4 py-12 bg-gray-50/50">
+    <div className="grow flex items-center justify-center px-4 py-12 bg-gray-50/50">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

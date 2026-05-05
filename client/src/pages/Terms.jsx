@@ -17,7 +17,7 @@ const Terms = () => {
         <p className="text-gray-500 mt-4">Last updated: May 2026</p>
       </div>
 
-      <div className="bg-white rounded-[2rem] p-8 lg:p-12 shadow-sm border border-gray-100 space-y-12 text-gray-600 leading-relaxed">
+      <div className="bg-white rounded-4xl p-8 lg:p-12 shadow-sm border border-gray-100 space-y-12 text-gray-600 leading-relaxed">
         <section>
           <div className="flex items-center gap-3 mb-4 text-gray-900">
             <Scale className="h-6 w-6 text-primary-600" />
