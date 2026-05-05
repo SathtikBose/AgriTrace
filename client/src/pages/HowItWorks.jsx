@@ -96,7 +96,7 @@ const HowItWorks = () => {
 
       {/* CTA Section */}
       <section className="py-24 bg-primary-600 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <h2 className="text-4xl font-bold text-white mb-8">Ready to secure your supply chain?</h2>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
