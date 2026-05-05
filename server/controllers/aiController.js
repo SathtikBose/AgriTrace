@@ -1,8 +1,8 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const axios = require('axios');
 const Batch = require('../models/Batch');
 const Log = require('../models/Log');
 
-// @desc    Analyze batch tracking logs using Gemini AI
+// @desc    Analyze batch tracking logs using OpenRouter (Gemini Flash)
 // @route   GET /api/ai/analyze/:batchId
 // @access  Public
 const analyzeBatch = async (req, res) => {
@@ -16,9 +16,6 @@ const analyzeBatch = async (req, res) => {
     if (!batch) {
       return res.status(404).json({ message: 'Batch not found' });
     }
-
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `
       You are an AI supply chain expert for agricultural products. 
@@ -43,9 +40,23 @@ const analyzeBatch = async (req, res) => {
       Return ONLY the JSON object.
     `;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const response = await axios.post(
+      'https://openrouter.ai/api/v1/chat/completions',
+      {
+        model: 'google/gemini-flash-1.5',
+        messages: [{ role: 'user', content: prompt }],
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          'HTTP-Referer': 'http://localhost:5000', // Optional
+          'X-Title': 'AgriTrace', // Optional
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const text = response.data.choices[0].message.content;
     
     // Clean up potential markdown formatting in response
     const jsonString = text.replace(/```json|```/g, '').trim();
@@ -53,8 +64,8 @@ const analyzeBatch = async (req, res) => {
 
     res.json(insights);
   } catch (error) {
-    console.error('Gemini AI Error:', error);
-    res.status(500).json({ message: 'Failed to generate AI insights' });
+    console.error('OpenRouter AI Error:', error.response?.data || error.message);
+    res.status(500).json({ message: 'Failed to generate AI insights via OpenRouter' });
   }
 };
 
