@@ -13,6 +13,7 @@ import Terms from './pages/Terms';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import NotFound from './pages/NotFound';
+import HowItWorks from './pages/HowItWorks';
 import { useAuth } from './context/AuthContext';
 import { ShieldCheck, Truck, Warehouse, Store, QrCode } from 'lucide-react';
 
@@ -163,6 +164,7 @@ function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
           <Route 
             path="/dashboard/farmer" 
             element={
