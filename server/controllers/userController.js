@@ -101,30 +101,34 @@ const forgotPassword = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const resetToken = crypto.randomBytes(20).toString('hex');
-    user.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-    user.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+    // Generate 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.resetPasswordToken = otp;
+    user.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
 
     await user.save();
 
-    const resetUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/reset-password/${resetToken}`;
-
     const message = `
-      <h1>AgriTrace Password Reset</h1>
-      <p>You requested a password reset. Please click the link below to reset your password:</p>
-      <a href="${resetUrl}">${resetUrl}</a>
-      <p>This link will expire in 10 minutes.</p>
+      <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h1 style="color: #16a34a;">AgriTrace Security</h1>
+        <p>You requested a password reset. Use the following 6-digit OTP to verify your identity:</p>
+        <div style="font-size: 32px; font-weight: bold; letter-spacing: 5px; padding: 10px; background: #f0fdf4; color: #15803d; border-radius: 5px; display: inline-block;">
+          ${otp}
+        </div>
+        <p>This code will expire in 10 minutes.</p>
+        <p style="color: #666; font-size: 12px; margin-top: 20px;">If you didn't request this, please ignore this email.</p>
+      </div>
     `;
 
     try {
       await resend.emails.send({
         from: 'AgriTrace <onboarding@resend.dev>',
         to: user.email,
-        subject: 'Password Reset Request',
+        subject: 'Your AgriTrace Verification Code',
         html: message,
       });
 
-      res.json({ message: 'Email sent' });
+      res.json({ message: 'OTP sent to your email' });
     } catch (err) {
       user.resetPasswordToken = undefined;
       user.resetPasswordExpire = undefined;
@@ -136,26 +140,24 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-// @desc    Reset Password
-// @route   PUT /api/users/resetpassword/:resettoken
+// @desc    Verify OTP & Reset Password
+// @route   POST /api/users/resetpassword
 // @access  Public
 const resetPassword = async (req, res) => {
-  const resetPasswordToken = crypto
-    .createHash('sha256')
-    .update(req.params.resettoken)
-    .digest('hex');
+  const { email, otp, password } = req.body;
 
   try {
     const user = await User.findOne({
-      resetPasswordToken,
+      email,
+      resetPasswordToken: otp,
       resetPasswordExpire: { $gt: Date.now() },
     });
 
     if (!user) {
-      return res.status(400).json({ message: 'Invalid or expired token' });
+      return res.status(400).json({ message: 'Invalid or expired OTP' });
     }
 
-    user.password = req.body.password;
+    user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 

@@ -1,6 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Wheat, Github, Twitter, Mail } from 'lucide-react';
+// Footer component
+import React from "react";
+import { Link } from "react-router-dom";
+import { Wheat, Globe, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -12,19 +13,31 @@ const Footer = () => {
               <div className="bg-primary-600 p-1.5 rounded-lg">
                 <Wheat className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-black tracking-tighter text-gray-900">AgriTrace</span>
+              <span className="text-xl font-black tracking-tighter text-gray-900">
+                AgriTrace
+              </span>
             </Link>
             <p className="text-gray-500 text-sm leading-relaxed mb-6">
-              Empowering global food security through transparent, immutable supply chain traceability.
+              Empowering global food security through transparent, immutable
+              supply chain traceability.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="p-2 bg-gray-50 rounded-xl text-gray-400 hover:text-primary-600 transition-colors">
-                <Twitter className="h-5 w-5" />
+              <a
+                href="#"
+                className="p-2 bg-gray-50 rounded-xl text-gray-400 hover:text-primary-600 transition-colors"
+              >
+                <Wheat className="h-5 w-5" />
               </a>
-              <a href="#" className="p-2 bg-gray-50 rounded-xl text-gray-400 hover:text-primary-600 transition-colors">
-                <Github className="h-5 w-5" />
+              <a
+                href="#"
+                className="p-2 bg-gray-50 rounded-xl text-gray-400 hover:text-primary-600 transition-colors"
+              >
+                <Globe className="h-5 w-5" />
               </a>
-              <a href="#" className="p-2 bg-gray-50 rounded-xl text-gray-400 hover:text-primary-600 transition-colors">
+              <a
+                href="#"
+                className="p-2 bg-gray-50 rounded-xl text-gray-400 hover:text-primary-600 transition-colors"
+              >
                 <Mail className="h-5 w-5" />
               </a>
             </div>
@@ -33,26 +46,52 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-gray-900 mb-6">Platform</h4>
             <ul className="space-y-4 text-sm text-gray-500 font-medium">
-              <li><Link to="/" className="hover:text-primary-600">How it Works</Link></li>
-              <li><Link to="/register" className="hover:text-primary-600">Join as Farmer</Link></li>
-              <li><Link to="/support" className="hover:text-primary-600">Stakeholder Support</Link></li>
+              <li>
+                <Link to="/" className="hover:text-primary-600">
+                  How it Works
+                </Link>
+              </li>
+              <li>
+                <Link to="/register" className="hover:text-primary-600">
+                  Join as Farmer
+                </Link>
+              </li>
+              <li>
+                <Link to="/support" className="hover:text-primary-600">
+                  Stakeholder Support
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-bold text-gray-900 mb-6">Company</h4>
             <ul className="space-y-4 text-sm text-gray-500 font-medium">
-              <li><Link to="/privacy" className="hover:text-primary-600">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="hover:text-primary-600">Terms of Service</Link></li>
-              <li><Link to="/support" className="hover:text-primary-600">Contact Us</Link></li>
+              <li>
+                <Link to="/privacy" className="hover:text-primary-600">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="hover:text-primary-600">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link to="/support" className="hover:text-primary-600">
+                  Contact Us
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-bold text-gray-900 mb-6">Support</h4>
-            <p className="text-sm text-gray-500 mb-4 font-medium">Have questions or feedback?</p>
-            <Link 
-              to="/support" 
+            <p className="text-sm text-gray-500 mb-4 font-medium">
+              Have questions or feedback?
+            </p>
+            <Link
+              to="/support"
               className="inline-flex items-center justify-center w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-primary-600 transition-all text-sm"
             >
               Get Help
@@ -65,9 +104,15 @@ const Footer = () => {
             © 2026 AgriTrace. All rights reserved.
           </p>
           <div className="flex gap-6 text-xs text-gray-400 font-medium">
-            <Link to="/privacy" className="hover:text-gray-900">Privacy</Link>
-            <Link to="/terms" className="hover:text-gray-900">Terms</Link>
-            <Link to="/support" className="hover:text-gray-900">Help</Link>
+            <Link to="/privacy" className="hover:text-gray-900">
+              Privacy
+            </Link>
+            <Link to="/terms" className="hover:text-gray-900">
+              Terms
+            </Link>
+            <Link to="/support" className="hover:text-gray-900">
+              Help
+            </Link>
           </div>
         </div>
       </div>

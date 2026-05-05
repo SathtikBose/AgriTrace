@@ -1,30 +1,36 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Lock, Eye, EyeOff, Save, CheckCircle } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Lock, Eye, EyeOff, Save, Key } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../utils/api';
 import { toast } from 'react-hot-toast';
 
 const ResetPassword = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { token } = useParams();
-  const navigate = useNavigate();
+
+  const email = location.state?.email || '';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       return toast.error('Passwords do not match');
     }
+    if (otp.length !== 6) {
+      return toast.error('Enter a valid 6-digit OTP');
+    }
     setLoading(true);
     try {
-      await api.put(`/users/resetpassword/${token}`, { password });
-      toast.success('Password reset successfully!');
+      await api.post('/users/resetpassword', { email, otp, password });
+      toast.success('Password updated successfully!');
       setTimeout(() => navigate('/login'), 2000);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Reset failed');
+      toast.error(error.response?.data?.message || 'Verification failed');
     } finally {
       setLoading(false);
     }
@@ -39,11 +45,31 @@ const ResetPassword = () => {
       >
         <div className="bg-white rounded-[2.5rem] shadow-xl shadow-gray-200/50 p-8 lg:p-12 border border-gray-100">
           <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold text-gray-900">Reset Password</h1>
-            <p className="text-gray-500 mt-2">Enter your new secure password.</p>
+            <h1 className="text-3xl font-bold text-gray-900">Verify OTP</h1>
+            <p className="text-gray-500 mt-2">
+              We've sent a code to <span className="font-bold text-gray-700">{email}</span>
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">6-Digit OTP</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Key className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  required
+                  maxLength="6"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                  className="block w-full pl-12 pr-4 py-4 bg-gray-50 border-transparent rounded-2xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-50 transition-all outline-none text-center text-2xl font-bold tracking-[0.5em]"
+                  placeholder="000000"
+                />
+              </div>
+            </div>
+
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-2">New Password</label>
               <div className="relative">
