@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Wheat, MapPin, Scale, Calendar, Plus } from 'lucide-react';
+import { X, Wheat, MapPin, Scale, Calendar, Plus, Info } from 'lucide-react';
 import api from '../utils/api';
 import { toast } from 'react-hot-toast';
 
@@ -109,16 +109,23 @@ const CreateBatchModal = ({ isOpen, onClose, onSuccess }) => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary-600 text-white py-4 rounded-xl font-bold hover:bg-primary-700 transition-all shadow-lg shadow-primary-200 flex items-center justify-center gap-2 mt-4 disabled:opacity-50"
+            className="w-full bg-primary-600 text-white py-4 rounded-xl font-bold hover:bg-primary-700 transition-all shadow-lg shadow-primary-200 flex items-center justify-center gap-2 mt-4 disabled:opacity-50 group"
           >
-            {loading ? 'Processing...' : (
+            {loading ? (
+              <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            ) : (
               <>
-                <Plus className="h-5 w-5" />
+                <Plus className="h-5 w-5 group-hover:scale-125 transition-transform" />
                 Create Batch
               </>
             )}
           </button>
         </form>
+        
+        <div className="px-8 py-4 bg-gray-50 border-t border-gray-100 flex items-center gap-2 text-[10px] text-gray-400 font-medium">
+          <Info className="h-3 w-3" />
+          <span>New batches are instantly assigned a unique AgriTrace ID.</span>
+        </div>
       </div>
     </div>
   );

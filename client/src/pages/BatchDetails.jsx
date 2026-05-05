@@ -49,10 +49,10 @@ const BatchDetails = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="mb-8">
-        <Link to="/" className="flex items-center gap-2 text-gray-500 hover:text-primary-600 transition-colors font-medium">
+      <div className="mb-10">
+        <Link to="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-primary-600 transition-all font-semibold bg-gray-50 px-4 py-2 rounded-xl border border-gray-100 hover:bg-white hover:shadow-md">
           <ArrowLeft className="h-4 w-4" />
-          Back to Dashboard
+          Dashboard
         </Link>
       </div>
 

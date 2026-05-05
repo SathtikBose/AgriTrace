@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Login from './pages/Login';
@@ -68,24 +68,54 @@ const Home = () => (
     </section>
 
     {/* Features Preview */}
-    <section className="py-24 bg-gray-50">
+    <section className="py-32 bg-gray-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="text-center mb-20">
+          <h2 className="text-sm font-bold text-primary-600 uppercase tracking-[0.2em] mb-4">Process</h2>
+          <h3 className="text-4xl font-extrabold text-gray-900">How AgriTrace Works</h3>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
+          {/* Connector Line (Desktop) */}
+          <div className="hidden md:block absolute top-24 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary-200 to-transparent z-0"></div>
+          
           {[
-            { icon: ShieldCheck, title: "Immutable Logs", desc: "Secure tracking of every stage" },
-            { icon: Truck, title: "Real-time Transit", desc: "Monitor transport conditions" },
-            { icon: Warehouse, title: "Smart Storage", desc: "Warehouse state monitoring" },
-            { icon: Store, title: "Retail Ready", desc: "QR codes for consumer trust" }
+            { step: "01", icon: ShieldCheck, title: "Harvest", desc: "Farmer creates a secure digital batch ID" },
+            { step: "02", icon: Truck, title: "Transit", desc: "Logistics update real-time location logs" },
+            { step: "03", icon: Warehouse, title: "Storage", desc: "Warehouses verify quality and conditions" },
+            { step: "04", icon: Store, title: "Retail", desc: "Consumers scan QR for full transparency" }
           ].map((feature, i) => (
-            <div key={i} className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl transition-shadow group">
-              <div className="bg-primary-50 w-12 h-12 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary-600 transition-colors">
-                <feature.icon className="h-6 w-6 text-primary-600 group-hover:text-white" />
+            <div key={i} className="relative z-10 flex flex-col items-center text-center group">
+              <div className="w-20 h-20 bg-white rounded-3xl shadow-xl shadow-primary-100/50 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 border border-gray-50">
+                <feature.icon className="h-8 w-8 text-primary-600" />
+                <span className="absolute -top-3 -right-3 w-8 h-8 bg-gray-900 text-white text-xs font-bold rounded-xl flex items-center justify-center border-4 border-gray-50">
+                  {feature.step}
+                </span>
               </div>
-              <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
-              <p className="text-gray-500 text-sm">{feature.desc}</p>
+              <h3 className="text-xl font-bold mb-3 text-gray-900">{feature.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed px-4">{feature.desc}</p>
             </div>
           ))}
         </div>
+      </div>
+    </section>
+
+    {/* CTA Section */}
+    <section className="py-24 px-4">
+      <div className="max-w-5xl mx-auto bg-primary-600 rounded-[3rem] p-12 lg:p-20 text-center text-white relative overflow-hidden">
+        <div className="relative z-10">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6">Ready to digitize your supply chain?</h2>
+          <p className="text-primary-100 text-lg mb-10 max-w-2xl mx-auto">
+            Join thousands of producers and distributors ensuring food safety and quality through blockchain-inspired traceability.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link to="/register" className="bg-white text-primary-600 px-8 py-4 rounded-2xl text-lg font-bold hover:bg-primary-50 transition-all">
+              Create Free Account
+            </Link>
+          </div>
+        </div>
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-primary-900/20 rounded-full blur-3xl"></div>
       </div>
     </section>
   </main>
