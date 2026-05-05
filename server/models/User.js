@@ -26,6 +26,8 @@ const userSchema = new mongoose.Schema({
     enum: ['Farmer', 'Transporter', 'Warehouse', 'Distributor', 'Retailer', 'Consumer'],
     default: 'Consumer',
   },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
 }, {
   timestamps: true,
 });

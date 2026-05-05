@@ -11,6 +11,26 @@
 - **AI Insights**: Gemini-powered analysis for freshness scores and risk detection.
 - **Public Search**: consumers can track any batch via ID or QR code without logging in.
 
+## 🔄 Supply Chain Workflow
+
+```mermaid
+graph TD
+    A[Farmer] -->|Creates Batch| B(Crop Batch AGRI-XXXX)
+    B -->|Logs Harvest| C{Log System}
+    C -->|Update Status| D[In Transit]
+    D -->|Log Transport| C
+    C -->|Update Status| E[In Warehouse]
+    E -->|Log Storage| C
+    C -->|Update Status| F[At Retailer]
+    F -->|Log Delivery| C
+    C -->|Update Status| G[Sold]
+    
+    H[Consumer] -->|Scan QR| I[Public Traceability Page]
+    I -->|Fetch Data| C
+    I -->|Fetch Insights| J[Gemini AI]
+    J -->|Analyze Logs| I
+```
+
 ## 🛠️ Tech Stack
 
 - **Frontend**: React (Vite) + Tailwind CSS v4 + Framer Motion

@@ -1,11 +1,17 @@
 import React from 'react';
-import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import { Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import FarmerDashboard from './pages/FarmerDashboard';
 import BatchDetails from './pages/BatchDetails';
+import Privacy from './pages/Privacy';
+import Support from './pages/Support';
+import Terms from './pages/Terms';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import { useAuth } from './context/AuthContext';
 import { ShieldCheck, Truck, Warehouse, Store, QrCode } from 'lucide-react';
 
@@ -131,24 +137,42 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   return children;
 };
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 function App() {
+  const location = useLocation();
+
   return (
     <div className="min-h-screen flex flex-col font-sans text-gray-900 bg-white">
+      <ScrollToTop />
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/batch/:batchId" element={<BatchDetails />} />
-        <Route 
-          path="/dashboard/farmer" 
-          element={
-            <ProtectedRoute allowedRoles={['Farmer']}>
-              <FarmerDashboard />
-            </ProtectedRoute>
-          } 
-        />
-      </Routes>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/batch/:id" element={<BatchDetails />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route 
+            path="/dashboard/farmer" 
+            element={
+              <ProtectedRoute allowedRoles={['Farmer']}>
+                <FarmerDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </AnimatePresence>
       <Footer />
     </div>
   );
