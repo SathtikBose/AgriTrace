@@ -7,22 +7,53 @@ import Register from './pages/Register';
 import FarmerDashboard from './pages/FarmerDashboard';
 import BatchDetails from './pages/BatchDetails';
 import { useAuth } from './context/AuthContext';
-import { ShieldCheck, Truck, Warehouse, Store } from 'lucide-react';
+import { ShieldCheck, Truck, Warehouse, Store, QrCode } from 'lucide-react';
 
 const Home = () => (
   <main className="flex-grow">
     {/* Hero Section */}
     <section className="relative overflow-hidden pt-16 pb-24 lg:pt-32 lg:pb-40 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="lg:w-2/3">
-          <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-gray-900 mb-6">
-            Trace Every Seed <br />
-            <span className="text-primary-600">To Every Table.</span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-10 max-w-xl leading-relaxed">
-            Empowering farmers and consumers with transparent, immutable traceability for agricultural products across the entire supply chain.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="lg:w-2/3">
+            <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-gray-900 mb-6">
+              Trace Every Seed <br />
+              <span className="text-primary-600">To Every Table.</span>
+            </h1>
+            <p className="text-xl text-gray-600 mb-10 max-w-xl leading-relaxed">
+              Empowering farmers and consumers with transparent, immutable traceability for agricultural products across the entire supply chain.
+            </p>
+            
+            {/* Public Tracking Search */}
+            <div className="max-w-md mb-10">
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <QrCode className="h-5 w-5 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Enter Batch ID (e.g. AGRI-1234)"
+                  className="block w-full pl-12 pr-32 py-4 bg-white border-2 border-gray-100 rounded-2xl leading-5 placeholder-gray-400 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-50 transition-all shadow-sm"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      window.location.href = `/batch/${e.target.value.toUpperCase()}`;
+                    }
+                  }}
+                />
+                <div className="absolute inset-y-2 right-2">
+                  <button 
+                    onClick={(e) => {
+                      const input = e.currentTarget.parentElement.previousSibling;
+                      if (input.value) window.location.href = `/batch/${input.value.toUpperCase()}`;
+                    }}
+                    className="h-full px-4 bg-primary-600 text-white text-sm font-bold rounded-xl hover:bg-primary-700 transition-all shadow-md shadow-primary-200"
+                  >
+                    Track Now
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4">
             <button className="bg-primary-600 text-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-primary-700 transition-all shadow-xl shadow-primary-100 flex items-center justify-center gap-2">
               Get Started
             </button>

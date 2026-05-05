@@ -63,8 +63,16 @@ const BatchDetails = () => {
               <span className="text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-2 py-1 rounded">
                 {batch.batchId}
               </span>
-              <div className="bg-primary-600 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide">
-                {batch.status}
+              <div className="flex flex-col items-end gap-2">
+                <div className="bg-primary-600 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide">
+                  {batch.status}
+                </div>
+                {!user && (
+                  <span className="text-[10px] text-gray-400 font-medium flex items-center gap-1">
+                    <ShieldCheck className="h-3 w-3 text-green-500" />
+                    Public Verified
+                  </span>
+                )}
               </div>
             </div>
             
