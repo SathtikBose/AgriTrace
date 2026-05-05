@@ -12,6 +12,7 @@ import Support from './pages/Support';
 import Terms from './pages/Terms';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import NotFound from './pages/NotFound';
 import { useAuth } from './context/AuthContext';
 import { ShieldCheck, Truck, Warehouse, Store, QrCode } from 'lucide-react';
 
@@ -170,7 +171,7 @@ function App() {
               </ProtectedRoute>
             } 
           />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AnimatePresence>
       <Footer />
