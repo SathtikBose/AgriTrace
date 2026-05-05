@@ -5,6 +5,7 @@ import { ArrowLeft, Package, MapPin, Calendar, User, QrCode, Plus } from 'lucide
 import api from '../utils/api';
 import TrackingTimeline from '../components/TrackingTimeline';
 import AddLogModal from '../components/AddLogModal';
+import AIInsights from '../components/AIInsights';
 import { useAuth } from '../context/AuthContext';
 
 const BatchDetails = () => {
@@ -113,7 +114,9 @@ const BatchDetails = () => {
         </div>
 
         {/* Timeline Section */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 space-y-8">
+          <AIInsights batchId={batch._id} />
+          
           <div className="bg-gray-50/50 rounded-3xl p-8 lg:p-12">
             <div className="flex justify-between items-center mb-12">
               <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
