@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import FarmerDashboard from './pages/FarmerDashboard';
+import BatchDetails from './pages/BatchDetails';
 import { useAuth } from './context/AuthContext';
 import { ShieldCheck, Truck, Warehouse, Store } from 'lucide-react';
 
@@ -77,6 +78,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/batch/:batchId" element={<BatchDetails />} />
         <Route 
           path="/dashboard/farmer" 
           element={

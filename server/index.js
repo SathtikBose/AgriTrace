@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === 'development') {
 // Routes
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/batches', require('./routes/batchRoutes'));
+app.use('/api/logs', require('./routes/logRoutes'));
 
 app.get('/', (req, res) => {
   res.send('AgriTrace API is running...');

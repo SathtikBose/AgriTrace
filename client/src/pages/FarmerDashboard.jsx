@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Plus, Package, MapPin, Calendar, Clock, ChevronRight } from 'lucide-react';
 import api from '../utils/api';
 import CreateBatchModal from '../components/CreateBatchModal';
@@ -87,10 +88,13 @@ const FarmerDashboard = () => {
                 </div>
               </div>
 
-              <button className="w-full bg-gray-50 text-gray-900 py-3 rounded-xl font-bold group-hover:bg-primary-600 group-hover:text-white transition-all flex items-center justify-center gap-2">
+              <Link 
+                to={`/batch/${batch.batchId}`}
+                className="w-full bg-gray-50 text-gray-900 py-3 rounded-xl font-bold group-hover:bg-primary-600 group-hover:text-white transition-all flex items-center justify-center gap-2"
+              >
                 View Details
                 <ChevronRight className="h-4 w-4" />
-              </button>
+              </Link>
               
               {/* Background accent */}
               <div className="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 bg-primary-50 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
