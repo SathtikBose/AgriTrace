@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Leaf, Menu, User, LogOut } from 'lucide-react';
+import { Leaf, Menu, User, LogOut, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
@@ -10,6 +10,14 @@ const Navbar = () => {
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  const getDashboardLink = () => {
+    if (!user) return null;
+    switch (user.role) {
+      case 'Farmer': return '/dashboard/farmer';
+      default: return '/';
+    }
   };
 
   return (
@@ -25,7 +33,16 @@ const Navbar = () => {
           
           <div className="hidden md:flex items-center gap-8">
             <Link to="/" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Track Batch</Link>
-            <Link to="/" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">How it works</Link>
+            
+            {user && (
+              <Link 
+                to={getDashboardLink()} 
+                className="flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                Dashboard
+              </Link>
+            )}
             
             <div className="flex items-center gap-4 ml-4">
               {user ? (

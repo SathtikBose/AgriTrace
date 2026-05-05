@@ -1,9 +1,11 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import FarmerDashboard from './pages/FarmerDashboard';
+import { useAuth } from './context/AuthContext';
 import { ShieldCheck, Truck, Warehouse, Store } from 'lucide-react';
 
 const Home = () => (
@@ -57,6 +59,16 @@ const Home = () => (
   </main>
 );
 
+const ProtectedRoute = ({ children, allowedRoles }) => {
+  const { user, loading } = useAuth();
+  
+  if (loading) return null;
+  if (!user) return <Navigate to="/login" />;
+  if (allowedRoles && !allowedRoles.includes(user.role)) return <Navigate to="/" />;
+  
+  return children;
+};
+
 function App() {
   return (
     <div className="min-h-screen flex flex-col font-sans text-gray-900 bg-white">
@@ -65,6 +77,14 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route 
+          path="/dashboard/farmer" 
+          element={
+            <ProtectedRoute allowedRoles={['Farmer']}>
+              <FarmerDashboard />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
       <Footer />
     </div>
