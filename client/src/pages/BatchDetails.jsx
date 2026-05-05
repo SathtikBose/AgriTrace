@@ -9,7 +9,7 @@ import AIInsights from '../components/AIInsights';
 import { useAuth } from '../context/AuthContext';
 
 const BatchDetails = () => {
-  const { batchId } = useParams();
+  const { id } = useParams();
   const { user } = useAuth();
   const [batch, setBatch] = useState(null);
   const [logs, setLogs] = useState([]);
@@ -18,7 +18,7 @@ const BatchDetails = () => {
 
   const fetchData = async () => {
     try {
-      const batchRes = await api.get(`/batches/${batchId}`);
+      const batchRes = await api.get(`/batches/${id}`);
       setBatch(batchRes.data);
       
       const logsRes = await api.get(`/logs/${batchRes.data._id}`);
@@ -32,7 +32,7 @@ const BatchDetails = () => {
 
   useEffect(() => {
     fetchData();
-  }, [batchId]);
+  }, [id]);
 
   if (loading) return (
     <div className="flex justify-center items-center h-screen">
