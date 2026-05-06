@@ -16,14 +16,16 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const { data } = await axios.post('http://localhost:5000/api/users/login', { email, password });
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    const { data } = await axios.post(`${apiUrl}/users/login`, { email, password });
     setUser(data);
     localStorage.setItem('userInfo', JSON.stringify(data));
     return data;
   };
 
   const register = async (userData) => {
-    const { data } = await axios.post('http://localhost:5000/api/users/register', userData);
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    const { data } = await axios.post(`${apiUrl}/users/register`, userData);
     setUser(data);
     localStorage.setItem('userInfo', JSON.stringify(data));
     return data;
